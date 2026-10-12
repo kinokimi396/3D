@@ -1,12 +1,12 @@
 from ursina import *
+from ursina.prefabs.first_person_controller import FirstPersonController
 
 app = Ursina()
 
-player = Entity(model='cube', color=color.orange, scale_y=2)
+player = FirstPersonController(position=(0,2,0))
 
-ground = Entity(model='plane', scale=100, texture='white_cube', texture_scale=(100, 100), collider='box')
+GROUND_SIZE = 500
 
-EditorCamera()
-
-app.run()
-
+ground = Entity(
+    
+)
