@@ -1,11 +1,12 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
-from ground import create_ground,update_ground
+from ground import create_ground
 from mountain import create_mountain
+from chest import create_chest
 
 app = Ursina()
 
-player = FirstPersonController(position=(0,15,0))
+player = FirstPersonController(position=(0,5,0))
 
 NORMAL_SPEED = 5
 DASH_SPEED = 12
@@ -13,6 +14,10 @@ player.speed = NORMAL_SPEED
 
 last_w_press_time = 0
 is_dashing = False
+
+mountain_entity = create_mountain()
+ground_entity = create_ground()
+chest_entity = create_chest(player)
 
 def input(key):
     global last_w_press_time,is_dashing
@@ -23,8 +28,12 @@ def input(key):
             is_dashing = True
         last_w_press_time = current_time
 
-mountain_entity = create_mountain()
-ground_entity = create_ground()
+    if key == 'e':
+        if distance(player.position, chest_entity.position) < 3:
+            chest_entity.gui.toggle()
+
+
+
 
 Sky(color=color.cyan)
 
@@ -38,5 +47,4 @@ def update():
         player.speed = DASH_SPEED
     else:
         player.speed = NORMAL_SPEED
-
 app.run()
